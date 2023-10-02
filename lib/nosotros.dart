@@ -9,14 +9,7 @@ class NosotrosScreen extends StatelessWidget {
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0x3805B3E8), // Azul claro
-              Color(0xB006456C), // Azul oscuro
-            ],
-          ),
+
         ),
         child: ListView(
           children: [
