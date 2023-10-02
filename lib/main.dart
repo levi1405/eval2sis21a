@@ -102,7 +102,7 @@ class _ProductosScreenState extends State<ProductosScreen> {
                         onPressed: () {
                           _confirmarEliminar(document.id); // Llama a la función para confirmar la eliminación
                         },
-                        style: ElevatedButton.styleFrom(primary: Color.fromARGB(255, 18, 170, 26)), // Botón de eliminar en rojo
+                        style: ElevatedButton.styleFrom(primary: Color.fromARGB(255, 170, 74, 18)), // Botón de eliminar en rojo
                         child: Text('Eliminar'),
                       ),
                     ],
