@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'nosotros.dart'; // Importa el archivo nosotros.dart
-import 'editar_producto.dart'; // Importa el archivo editar_producto.dart
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,18 +34,6 @@ class _ProductosScreenState extends State<ProductosScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Productos'),
-        actions: [
-          // Botón para ir a la página "Nosotros"
-          IconButton(
-            icon: Icon(Icons.info),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => NosotrosScreen()), // Llama a la página "Nosotros"
-              );
-            },
-          ),
-        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('tb_productos').snapshots(),
@@ -84,26 +70,6 @@ class _ProductosScreenState extends State<ProductosScreen> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(data['stock'].toString()),
-                  SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          _editarProducto(document.id); // Llama a la función para editar
-                        },
-                        style: ElevatedButton.styleFrom(primary: Colors.orange), // Botón de editar en naranja
-                        child: Text('Editar'),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          _confirmarEliminar(document.id); // Llama a la función para confirmar la eliminación
-                        },
-                        style: ElevatedButton.styleFrom(primary: Colors.red), // Botón de eliminar en rojo
-                        child: Text('Eliminar'),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             );
@@ -155,47 +121,6 @@ class _ProductosScreenState extends State<ProductosScreen> {
           : null,
     );
   }
-
-  void _editarProducto(String documentId) {
-    // Navega a la pantalla de edición pasando el ID del documento
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => EditarProductoScreen(documentId)),
-    );
-  }
-
-  void _confirmarEliminar(String documentId) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Confirmar eliminación'),
-          content: Text('¿Estás seguro de eliminar este documento?'),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Cierra el cuadro de diálogo
-              },
-              child: Text('Cancelar'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Cierra el cuadro de diálogo
-                _eliminarProducto(documentId); // Llama a la función para eliminar
-              },
-              style: ElevatedButton.styleFrom(primary: Colors.red), // Botón de eliminar en rojo
-              child: Text('Eliminar'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _eliminarProducto(String documentId) {
-    // Elimina el documento de Firebase
-    FirebaseFirestore.instance.collection('tb_productos').doc(documentId).delete();
-  }
 }
 
 class RegistrarProductoScreen extends StatelessWidget {
@@ -209,51 +134,52 @@ class RegistrarProductoScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Registrar Producto'),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.white, Colors.blue], // Cambia los colores según tus preferencias
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'images/gerson.jpeg', // Reemplaza con la ruta de tu imagen
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextField(
-                controller: nombreController,
-                decoration: InputDecoration(labelText: 'Nombre'),
-              ),
-              TextField(
-                controller: precioController,
-                decoration: InputDecoration(labelText: 'Precio'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: cantidadController,
-                decoration: InputDecoration(labelText: 'Cantidad'),
-                keyboardType: TextInputType.number,
-              ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  _agregarProducto(context);
-                },
-                child: Text('Registrar Producto'),
-              ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(primary: Colors.red),
-                child: Text('Cancelar'),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextField(
+                  controller: nombreController,
+                  decoration: InputDecoration(labelText: 'Nombre'),
+                ),
+                TextField(
+                  controller: precioController,
+                  decoration: InputDecoration(labelText: 'Precio'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: cantidadController,
+                  decoration: InputDecoration(labelText: 'Cantidad'),
+                  keyboardType: TextInputType.number,
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    _agregarProducto(context);
+                  },
+                  child: Text('Registrar Producto'),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(primary: Colors.red),
+                  child: Text('Cancelar'),
+                ),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
