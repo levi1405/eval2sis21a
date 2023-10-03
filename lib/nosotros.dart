@@ -16,7 +16,7 @@ class NosotrosScreen extends StatelessWidget {
               'Gerson Adonay Melara Campos', // Nombre
               'gerson.melara22@itca.edu.sv', // Correo
               'images/gerson.jpeg', // Ruta de la imagen
-              'Apellido: Melara Campos', // Detalle 1
+              'Apellidos: Melara Campos', // Detalle 1
               'Edad: 19 años', // Detalle 2
             ),
             _buildEquipoItem(
@@ -24,7 +24,7 @@ class NosotrosScreen extends StatelessWidget {
               'Emilio Alexander Rodriguez Rivera', // Nombre
               'emilio.rodriguez22@itca.edu.sv', // Correo
               'images/emilio.jpeg', // Ruta de la imagen
-              'Apellido: Rodriguez Rivera', // Detalle 1
+              'Apellidos: Rodriguez Rivera', // Detalle 1
               'Edad: 23 años', // Detalle 2
             ),
           ],
